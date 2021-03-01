@@ -21,6 +21,7 @@ Using the program is equally simple.
  * To stop all media players, run `omnipause stop`
  * To skip to the next track on all playing media players, run `omnipause next`
  * To play the previous track on all playing media players, run `omnipause previous`
+ * To check the status of all available players, run `omnipause status`
  * To toggle the playback state of running media players, run `omnipause toggle`
  	* Note:  `omnipause toggle` works by pausing all of the players if any of them are playing.
 	If none of them are currently playing, it resumes playback any players paused by omnipause.

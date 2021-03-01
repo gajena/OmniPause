@@ -72,6 +72,7 @@ def stop():
 		player_status = player.Get('org.mpris.MediaPlayer2.Player','PlaybackStatus', dbus_interface='org.freedesktop.DBus.Properties')
 		if player_status == 'Playing' or player_status == 'Stopped':
 			player.Stop(dbus_interface='org.mpris.MediaPlayer2.Player', reply_handler=do_nothing, error_handler=do_nothing)
+
 def toggle():
 	playing = False
 	for i in players:
@@ -83,6 +84,14 @@ def toggle():
 		pause()
 	else:
 		play()
+
+def status():
+	for i in players:
+		player = bus.get_object(i, '/org/mpris/MediaPlayer2')
+		player_status = player.Get('org.mpris.MediaPlayer2.Player','PlaybackStatus', dbus_interface='org.freedesktop.DBus.Properties')
+		if player_status == 'Playing' or player_status == 'Paused':
+			meta_data = player.Get('org.mpris.MediaPlayer2.Player','Metadata', dbus_interface='org.freedesktop.DBus.Properties')
+			print player_status + " " + meta_data['xesam:title'] + "\n" + meta_data['xesam:artist'][0] + " / " +i[23:]
 def next():
 	for i in players:
 		player = bus.get_object(i, '/org/mpris/MediaPlayer2')
@@ -123,7 +132,9 @@ if len(sys.argv)-1 is 1:
 		previous()
 	elif sys.argv[1] == 'toggle':
 		toggle()
+	elif sys.argv[1] == 'status':
+		status()
 	else:
-		print >> sys.stderr, "Error:  Valid commands to "+sys.argv[0]+"are: pause, play, stop, next, previous, or toggle"
+		print >> sys.stderr, "Error:  Valid commands to "+sys.argv[0]+"are: pause, play, stop, next, previous, toggle, or status"
 else:
-	print >> sys.stderr, "Usage:  "+sys.argv[0]+" [pause|play|stop|next|previous|toggle]"
+	print >> sys.stderr, "Usage:  "+sys.argv[0]+" [pause|play|stop|next|previous|toggle|status]"
