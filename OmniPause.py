@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -91,7 +91,7 @@ def status():
 		player_status = player.Get('org.mpris.MediaPlayer2.Player','PlaybackStatus', dbus_interface='org.freedesktop.DBus.Properties')
 		if player_status == 'Playing' or player_status == 'Paused':
 			meta_data = player.Get('org.mpris.MediaPlayer2.Player','Metadata', dbus_interface='org.freedesktop.DBus.Properties')
-			print player_status + " " + meta_data['xesam:title'] + "\n" + meta_data['xesam:artist'][0] + " / " +i[23:]
+			print(player_status + " " + meta_data['xesam:title'] + "\n" + meta_data['xesam:artist'][0] + " / " +i[23:])
 def next():
 	for i in players:
 		player = bus.get_object(i, '/org/mpris/MediaPlayer2')
@@ -118,7 +118,7 @@ if not os.path.isdir(directory):
 		os.makedirs(directory+'/paused-players')
 	
 
-if len(sys.argv)-1 is 1:
+if len(sys.argv)-1 == 1:
 	getPlayerList()
 	if sys.argv[1] == 'pause':
 		pause()
@@ -135,6 +135,6 @@ if len(sys.argv)-1 is 1:
 	elif sys.argv[1] == 'status':
 		status()
 	else:
-		print >> sys.stderr, "Error:  Valid commands to "+sys.argv[0]+"are: pause, play, stop, next, previous, toggle, or status"
+		print(sys.stderr, "Error:  Valid commands to "+sys.argv[0]+"are: pause, play, stop, next, previous, toggle, or status")
 else:
-	print >> sys.stderr, "Usage:  "+sys.argv[0]+" [pause|play|stop|next|previous|toggle|status]"
+	print(sys.stderr, "Usage:  "+sys.argv[0]+" [pause|play|stop|next|previous|toggle|status]")
